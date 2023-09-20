@@ -1,0 +1,15 @@
+# keras==2.8.0
+# Keras-Preprocessing==1.1.2
+# numpy==1.22.3+mkl (install separately)
+# Visual Studio Build Tools needed and pip upgrade
+# python 3.10.4
+tensorboard>=2.11.0
+# tensorflow>=2.11.0
+scikit-image>=0.19.3
+tqdm>=4.64.0
+scipy>=1.8.0
+seaborn>=0.11.2
+scikit-learn>=1.0.2
+neptune-client>=0.16.1
+neptune-tensorflow-keras>=0.9.9
+matplotlib
