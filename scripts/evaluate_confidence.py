@@ -74,9 +74,6 @@ def average_confidence_binary(
 
         conf_ls.append(conf(1-pred,conf_perc))
 
-        # print(type(pred))
-        # print(pred.shape)
-
     print(len(conf_ls))
 
     return np.mean(conf_ls)

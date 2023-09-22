@@ -71,8 +71,6 @@ def main(config_file_path, fold_res_l, k, iter):
 
 
     print(info_loss_df)
-
-    # boxplot_info_loss(info_loss_df, save_path = log_dir / 'graph_info_loss.svg')
     barplot_info_loss(info_loss_df, save_path = log_dir / 'graph_info_loss.svg')
 
 def load_img_res(msk_path,fold_resolution):

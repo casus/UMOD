@@ -6,8 +6,6 @@ configs/*
 *__pycache__
 *.neptune*
 *.vscode*
-*maskrcnn_pytorch*
-*wandb*
 *.DS_Store*
 *.log*
 *history.txt*

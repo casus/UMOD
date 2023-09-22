@@ -32,10 +32,6 @@ def picks_area(image, neighbourhood=4):
                                                            [10, 2, 10]]),
                                    mode='constant', cval=0)
 
-    # You can also write
-    # return perimeter_weights[perimeter_image].sum()
-    # but that was measured as taking much longer than bincount + np.dot (5x
-    # as much time)
     perimeter_histogram = np.bincount(perimeter_image.ravel(), minlength=50)
     total_perimeter = np.dot(perimeter_histogram, perimeter_weights)
 
@@ -78,10 +74,6 @@ def new_std_perimeter(image, neighbourhood=4):
                                                            [10, 2, 10]]),
                                    mode='constant', cval=0)
 
-    # You can also write
-    # return perimeter_weights[perimeter_image].sum()
-    # but that was measured as taking much longer than bincount + np.dot (5x
-    # as much time)
     perimeter_histogram = np.bincount(perimeter_image.ravel(), minlength=50)
     total_perimeter = np.dot(perimeter_histogram, perimeter_weights)
     return total_perimeter
@@ -98,17 +90,7 @@ def get_corres_circularity(df,split='train'):
     new_df = pd.DataFrame()
     for f in img_list:
         temp = df[df['img']==f]
-
-        # print(temp.shape)
         temp_file = pd.DataFrame()
-
-        # temp_file['label'] = temp['label']
-        # temp_file['x'] = temp['x']
-        # temp_file['y'] = temp['y']
-        # temp_file['img'] = temp['img']
-
-
-        # temp_file2 = pd.DataFrame()
 
         if split=='train':
             image_path = Path('../../../ds1/train/man_mask/cls/') / (f + '_Simple Segmentation.tif')
@@ -119,30 +101,12 @@ def get_corres_circularity(df,split='train'):
 
         img = TIFF.imread(image_path)
         img2 = np.empty((img.shape[0],img.shape[1],3))
-        # print(img2.shape)
         img2[:,:,0] = img
         img2[:,:,1] = img
         img2[:,:,2] = img
 
         labelImage = measure.label(np.squeeze(img2[:,:,0]), background=0)
         props = measure.regionprops(labelImage)
-        # area = []
-        # circu = []
-        # c1 = []
-        # c2 = []
-        # for prop in props:
-        #     y,x =prop.centroid
-        #     area.append(prop.area)
-        #     circu.append(modified_circ(picks_area(prop.image),new_std_perimeter(prop.image)))
-        #     # circu.append(apply_correction(prop,circ(prop)))
-        #     c1.append(x)
-        #     c2.append(y)
-
-
-        # temp_file2['area'] = area
-        # temp_file2['circularity']=circu
-        # temp_file2['x'] = c1
-        # temp_file2['y'] = c2
 
         #Assigning new found centroids to centroids in csv
         centroids = np.array([rp.centroid for rp in props])
@@ -167,11 +131,6 @@ def get_corres_circularity(df,split='train'):
             area.append(temp.iloc[col_idx].area)
             circu.append(modified_circ(picks_area(props[row_idx].image),new_std_perimeter(props[row_idx].image)))
             label.append(temp.iloc[col_idx].label)
-
-        # for x,y in list(zip(list(temp_file['x']),list(temp_file['y']))):
-        #     row = lookup_table(temp_file2, (y,x))
-        #     area.append(row.iloc[0]['area'])
-        #     circu.append(row.iloc[0]['circularity'])
 
         temp_file['label'] = label
         temp_file['x'] = c1
