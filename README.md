@@ -13,11 +13,11 @@ Run interactive session on hemera:
 
 Clone the repository and set up environment
 ```
-    git clone git@codebase.helmholtz.cloud:casus/yakimovich/deeputi.git
-    cd deeputi
+    git clone https://github.com/casus/UMOD.git
+    cd UMOD
     module load cuda/11.6
-    conda env create -n deeputi -f environment.yml
-    conda activate deeputi
+    conda env create -n umod -f environment.yml
+    conda activate umod
     ln -s /bigdata/casus/MLID/DeepUTI/ds1 data
 ```
 
@@ -42,7 +42,7 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.hzdr.de/casus/yakimovich/deeputi.git
+git remote add origin https://github.com/casus/UMOD.git
 git branch -M main
 git push -uf origin main
 ```
