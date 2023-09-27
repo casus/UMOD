@@ -164,7 +164,6 @@ def Unet(img_height, img_width, nclasses=4, filters=8, do=0.2, l2=1e-4):
 # output
     output_layer = Conv2D(filters=nclasses, kernel_size=(1, 1))(norm9)
     output_layer = BatchNormalization()(output_layer)
-    #output_layer = Reshape((img_height*img_width, nclasses), input_shape=(img_height, img_width, nclasses))(output_layer)
     output_layer = Activation('sigmoid')(output_layer)
 
     model = Model(inputs=input_layer, outputs=output_layer, name='Unet')

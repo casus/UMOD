@@ -13,8 +13,6 @@ from src.keras_patch_generator.utils import img_to_array, load_img
 from src.utils.losses import dice_coeff
 from src.utils.visualization import visualise
 
- # sequenced_patchified_predict uses product, but it's undefined. Is this correct?
-
 def checkDir(directory: str) -> None:
     """ Check if given directory exists; create it if it does not.
 
@@ -72,7 +70,6 @@ def test_model(model: Model, x: Tensor, y_true: Tensor, log_dir: str) -> None:
     plt.imshow(np.squeeze(y_true))
 
     plt.savefig(os.path.join(log_dir,'ground_truth_e{}.png'.format('test')), bbox_inches='tight', dpi=300)
-    # plt.show()
 
 def read_imgs_masks(img_dir: str, mask_dir: str, img_rows: int, img_cols: int,
                     target_width: int, target_height: int) -> tuple[np.ndarray, np.ndarray]:

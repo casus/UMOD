@@ -221,17 +221,6 @@ class customNumpyArrayIterator(image.Iterator):
                     batch_x[i] = x
                     y = np.where(y > 0.5, 1, 0)
                     batch_y[i] = y
-
-                    # plt.figure(figsize=(40,8))
-                    # plt.subplot(1, 2, 1)
-                    # plt.title('X')
-                    # plt.imshow(np.squeeze(x))
-
-                    # plt.subplot(1, 2, 2)
-                    # plt.title('Y')
-                    # plt.imshow(np.squeeze(y))
-
-                    # y_bw = y
                     number_of_white_pix = np.sum(y > 0)  # extracting non-white pixels 
                     perc_of_white_pix = number_of_white_pix/(y.shape[0]*y.shape[1])
                     batch_dict[i] = perc_of_white_pix
@@ -286,16 +275,6 @@ class customNumpyArrayIterator(image.Iterator):
             batch_x2 = batch_x
             batch_y2 = batch_y
 
-        # for i in range(batch_x2.shape[0]):s
-        #     plt.figure(figsize=(40,8))
-        #     plt.subplot(1, 2, 1)
-        #     plt.title('X')
-        #     plt.imshow(np.squeeze(batch_x2[i]))
-
-        #     plt.subplot(1, 2, 2)
-        #     plt.title('Y')
-        #     plt.imshow(np.squeeze(batch_y2[i]))
-
         if self.image_data_generator.max_iter != None:
             self.batch_trial_iter = 0
             self.batch_best_thresh_met = 0
@@ -338,7 +317,6 @@ class customNumpyArrayIterator(image.Iterator):
         if self.y is None:
             return output[0]
 
-        # output += (self.y[index_array],)
         output += (np.asarray(batch_y2),)
         if self.sample_weight is not None:
             output += (self.sample_weight[index_array],)

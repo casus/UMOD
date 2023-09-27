@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import neptune.new as neptune
 import numpy as np
 import tensorflow as tf
-# from neptune.new.types import File
 from neptune.new.integrations.tensorflow_keras import NeptuneCallback
 from neptune.new.types import File
 from tensorflow.keras import backend as K
@@ -116,7 +115,6 @@ def main(config_file_path):
         log_dir=model_dir / f'{runningTime}',
         histogram_freq=1,
     )
-    # tensorboard = TensorBoard(log_dir=log_dir)
 
     filepath = 'model.epoch{epoch:03d}.hdf5'
     checkpoint = ModelCheckpoint(filepath=log_dir / filepath,
@@ -240,23 +238,17 @@ def main(config_file_path):
 
     print(tf.shape(image_mask_generator_train.next()))
     print(tf.shape(image_mask_generator_val.next()))
-    # print(tf.shape(image_mask_generator_test.next()))
 
     # Add additional parameters
     if NEPTUNE:
-        # 10000//batch_size
         run["model/parameters/steps_per_epoch"] = steps_per_epoch
 
     history = model.fit(
         image_mask_generator_train,
-        # image_mask_generator,
         batch_size=config['train']['batch_size'],
-        # steps_per_epoch= steps_per_epoch, #10000//batch_size, 50, 200, 40
-        # steps_per_epoch=10000 // batch_size, #correct value
         epochs=epochs,
         validation_freq=val_freq,
-        validation_data=image_mask_generator_val,  # image_mask_generator_val,
-        # validation_steps=val_steps, #100//batch_size_val,
+        validation_data=image_mask_generator_val,  
         callbacks=callbacksList)
 
     summarise_history(history, 'dice_coeff', log_dir, run)

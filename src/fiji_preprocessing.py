@@ -5,7 +5,6 @@ from os import path
 
 imp = IJ.getImage()
 print(imp)
-# Print(image details)
 print("title:", imp.title)
 
 IJ.run("Auto Threshold", "method=Huang white");
@@ -17,7 +16,7 @@ IJ.run("Remove Outliers...", "radius=3 threshold=50 which=Bright");
 fs = FileSaver(imp)
 
 # A known folder to store the image at:
-folder = "C:/Users/de29/HZDR/DeepUTI/ucl/Finetuning 1/mask/img2"
+folder = "<target folder>"
 
 # Test if the folder exists before attempting to save the image:
 if path.exists(folder) and path.isdir(folder):
@@ -71,12 +70,11 @@ def process(srcDir, dstDir, currentDir, fileName, keepDirectories):
   print("Open image file", fileName)
 
   print("Open image path", os.path.join(srcDir,fileName))
-#  imp = IJ.openImage(os.path.join(srcDir, fileName))
   imps = BF.openImagePlus(os.path.join(srcDir, fileName))
 
   for imp in imps:
     imp.show()
-  # Put your processing commands here!
+  # Processing commands
   IJ.run("Auto Threshold", "method=Huang white")
   IJ.run("Find Edges")
   IJ.run("Close-")
@@ -100,7 +98,6 @@ def process(srcDir, dstDir, currentDir, fileName, keepDirectories):
       imp.close()
     else:
       IJ.saveAs(imp, "TIFF", os.path.join(saveDir, fileName))
-#	print("File saved successfully at ", filepath)
       imp.close()
   else:
     print("Folder does not exist or it's not a folder!")
