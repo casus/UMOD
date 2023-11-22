@@ -7,13 +7,18 @@ from tqdm import tqdm
 
 from src.utils.config import read_json_config
 from src.utils.io import image_mask_generator_from_directory
-from src.utils.losses import dice_bce_loss, dice_coeff
+from src.utils.losses import (auc, dice_bce_loss, dice_coeff, iou, precision,
+                              recall)
 from src.utils.model import load_unet_weights
 
 
-def evaluate(model, generator):
+def evaluate(model, generator, thresh):
     dce = []
     loss = []
+    iou_ls = []
+    precision_ls = []
+    recall_ls = []
+    auc_ls = []
 
     step = 0
     num_steps = generator.samples_x // generator.batch_size
@@ -24,12 +29,19 @@ def evaluate(model, generator):
             break
 
         pred = model.predict(images, verbose=0)
-        dce.append(dice_coeff(pred, masks))
-        loss.append(dice_bce_loss(pred, masks))
+        pred_binarized = np.where(pred>thresh, 1.0, 0.0).astype(np.float32)
+        
+        dce.append(dice_coeff(masks, pred))
+        loss.append(dice_bce_loss(masks, pred))
+        iou_ls.append(iou(masks, pred_binarized))
+        precision_ls.append(precision(masks, pred_binarized))
+        recall_ls.append(recall(masks, pred_binarized))
+        auc_ls.append(auc(masks, pred))
 
         step += 1
 
-    return np.mean(dce), np.mean(loss)
+    return np.mean(dce), np.mean(loss), np.mean(iou_ls), np.mean(precision_ls), np.mean(recall_ls), np.mean(auc_ls)
+
 
 @click.command()
 @click.argument('config_file_path', type=click.Path(exists=True))
@@ -55,9 +67,12 @@ def main(config_file_path):
         parameters['resampling_number'], config['fold_resolution']
     )
 
-    dce, loss = evaluate(model, image_mask_generator)
+    dce, loss, mean_iou, mean_precision, mean_recall, mean_auc = evaluate(model,
+                                                                image_mask_generator,
+                                                                parameters['thresh'])
 
-    print(f"dice_coeff = {dce}, loss = {loss}")
+    print(f"dice_coeff = {dce}, loss = {loss}, iou = {mean_iou}, \
+    precision = {mean_precision}, recall = {mean_recall}, auc = {mean_auc}")
 
 if __name__ == '__main__':
     main()
