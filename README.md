@@ -35,6 +35,7 @@ Clone the repository and set up environment for HZDR Hemera users:
     module load cuda/11.6
     conda env create -n deeputi -f environment.yml
     conda activate deeputi
+    pip install -e .
     ln -s /bigdata/casus/MLID/DeepUTI/ds1 data
 ```
 For others:
