@@ -1,7 +1,7 @@
 data
 model/*
 bash/*
-configs/*
+configs/[^sample | fold_resolution]*
 *.ipynb_checkpoints
 *__pycache__
 *.neptune*

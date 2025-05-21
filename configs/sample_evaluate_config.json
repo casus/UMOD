@@ -1,0 +1,64 @@
+{
+    "checkpoint_file_path": null,
+    "img_dir": null,
+    "mask_dir": null,
+    "fold_resolution": 0.3,
+    "parameters": {
+        "seed": 123,
+        "img_cols": 1392,
+        "img_rows": 1040,
+        "epochs": 50,
+        "batch_size": 50,
+        "steps_per_epoch": 250,
+        "smooth": 1,
+        "start_lr": 1e-3,
+        "target_width": 256,
+        "target_height": 256,
+        "thresh_obj_perc": 0.01,
+        "max_iter": 10,
+        "val_freq": 1,
+        "resampling_number": 1000,
+        "bottleneck_size": 32,
+        "dropout": 0,
+        "l2_regularization": 1e-4,
+        "scheduler": {
+            "start_after": 0,
+            "step_size": 50,
+            "gamma": 0.95
+        }
+    },
+    "img_mask_gen_args": {
+        "samplewise_center": false,
+        "samplewise_std_normalization": false,
+        "vertical_flip": false,
+        "horizontal_flip": false,
+        "preprocessing_function": null,
+        "fill_mode": "nearest"
+    },
+    "image_tf": {
+        "samplewise_center": false,
+        "samplewise_std_normalization": false,
+        "rescale": true,
+        "vertical_flip": true,
+        "horizontal_flip": true,
+        "preprocessing_function": false,
+        "fill_mode": true,
+        "max_iter": true,
+        "thresh_obj_perc": true,
+        "target_width": true,
+        "target_height": true
+    },
+    "mask_tf": {
+        "samplewise_center": false,
+        "samplewise_std_normalization": false,
+        "rescale": false,
+        "vertical_flip": true,
+        "horizontal_flip": true,
+        "preprocessing_function": true,
+        "fill_mode": true,
+        "max_iter": true,
+        "thresh_obj_perc": true,
+        "target_width": true,
+        "target_height": true
+    }
+}
